@@ -6,7 +6,7 @@ services:
     name: ledger-core-banking-api
     runtime: docker
     plan: free
-    region: singapore
+    region: virginia      # same area as Neon us-east-1 for low DB latency
     rootDir: backend
     dockerfilePath: ./Dockerfile
     healthCheckPath: /actuator/health
