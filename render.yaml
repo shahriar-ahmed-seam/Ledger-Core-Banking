@@ -1,0 +1,28 @@
+# Render Blueprint — deploys the Ledger-Core-Banking API as a Docker web service.
+# Database is provided by Neon (set the connection secrets in the Render dashboard).
+# Docs: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: ledger-core-banking-api
+    runtime: docker
+    plan: free
+    region: singapore
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /actuator/health
+    autoDeploy: true
+    envVars:
+      # --- Neon PostgreSQL (set these as secrets in the Render dashboard) ---
+      - key: DB_URL          # e.g. jdbc:postgresql://<host>.neon.tech/ledgercore?sslmode=require
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      # --- Application ---
+      - key: CORS_ORIGINS    # the Vercel site origin, e.g. https://ledger-core-banking.vercel.app
+        sync: false
+      - key: SEED_ENABLED    # "true" once, to seed demo data; then set back to "false"
+        value: "false"
+      - key: JAVA_TOOL_OPTIONS
+        value: "-XX:MaxRAMPercentage=75"
