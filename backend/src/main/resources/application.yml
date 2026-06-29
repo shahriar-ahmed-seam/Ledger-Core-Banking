@@ -1,0 +1,60 @@
+spring:
+  application:
+    name: ledger-core-banking
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/ledgercore}
+    username: ${DB_USERNAME:ledger_app}
+    password: ${DB_PASSWORD:ledger_app_pw}
+    hikari:
+      maximum-pool-size: ${DB_POOL_SIZE:20}
+      minimum-idle: 5
+      pool-name: ledger-hikari
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+        format_sql: false
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    # The migration scripts create a dedicated, least-privilege application role.
+    # Flyway connects with the admin credentials below to run DDL/GRANT statements.
+    user: ${DB_ADMIN_USERNAME:${DB_USERNAME:ledger_app}}
+    password: ${DB_ADMIN_PASSWORD:${DB_PASSWORD:ledger_app_pw}}
+
+server:
+  port: ${SERVER_PORT:8080}
+  error:
+    include-message: never
+    include-stacktrace: never
+
+ledger:
+  security:
+    # RS256 keys are generated at startup if not provided (dev convenience).
+    jwt:
+      access-token-ttl: PT15M       # Requirement 2.3
+      refresh-token-ttl: P7D        # Requirement 2.7
+      issuer: ledger-core-banking
+    login:
+      max-failed-attempts: 5        # Requirement 2.9
+      lockout-window: PT15M         # Requirement 2.9
+      lockout-duration: PT15M       # Requirement 2.9
+  transfer:
+    # Requirement 7.7: default 5s, configurable 1-30s.
+    lock-timeout: PT5S
+  idempotency:
+    retention: PT24H                # Requirement 8.6
+  seed:
+    enabled: ${SEED_ENABLED:false}
+
+cors:
+  allowed-origins: ${CORS_ORIGINS:http://localhost:5173}
+
+logging:
+  level:
+    root: INFO
+    com.ledgercore: DEBUG

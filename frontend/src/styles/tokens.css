@@ -1,0 +1,66 @@
+/*
+ * Ledger Bank — design tokens.
+ * A conservative retail internet-banking aesthetic: light surfaces, a solid bottle-green
+ * brand bar, thin grey borders, dense data panels, square corners, precise spacing.
+ */
+:root {
+  /* Type — system stack, the way real bank portals render */
+  --font-sans: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
+  --font-mono: "Consolas", "SF Mono", ui-monospace, monospace;
+
+  --text-xs: 11px;
+  --text-sm: 12px;
+  --text-base: 13px;
+  --text-md: 14px;
+  --text-lg: 16px;
+  --text-xl: 20px;
+  --text-2xl: 26px;
+
+  /* Brand — Bangladesh bottle green + flag red accent */
+  --brand: #006a4e;
+  --brand-dark: #00553f;
+  --brand-darker: #004634;
+  --brand-line: #00805f;
+  --accent-red: #d8232a;
+  --accent-red-dark: #b71c23;
+  --gold: #c79a3a;
+
+  /* Neutrals — light corporate */
+  --bg: #eef1f4;
+  --surface: #ffffff;
+  --surface-alt: #f6f8fa;
+  --header-row: #eef3f1;
+  --border: #d3d9e0;
+  --border-strong: #b9c1cb;
+  --text-strong: #1b2733;
+  --text: #2b3744;
+  --text-muted: #5b6b7a;
+  --text-faint: #8a98a6;
+
+  /* Semantic */
+  --positive: #0a7d4d;
+  --negative: #c0282d;
+  --warning: #b7791f;
+  --info: #1d6fa5;
+
+  /* Spacing — strict 4px rhythm */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+
+  /* Square corners everywhere */
+  --radius: 0px;
+
+  /* Flat, functional elevation (no blur halos) */
+  --shadow-bar: 0 1px 0 rgba(0, 0, 0, 0.12);
+  --shadow-panel: 0 1px 2px rgba(16, 32, 48, 0.06);
+
+  --content-max: 1180px;
+  --sidebar-w: 232px;
+  --mobile-bp: 768px;
+}

@@ -1,0 +1,50 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: ledger-postgres
+    environment:
+      POSTGRES_USER: ledger_admin
+      POSTGRES_PASSWORD: ledger_admin_pw
+      POSTGRES_DB: ledgercore
+    ports:
+      - "5432:5432"
+    volumes:
+      - ledger-pgdata:/var/lib/postgresql/data
+      - ./deploy/postgres-init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ledger_admin -d ledgercore"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ledger-backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/ledgercore
+      DB_USERNAME: ledger_app
+      DB_PASSWORD: ledger_app_pw
+      DB_ADMIN_USERNAME: ledger_admin
+      DB_ADMIN_PASSWORD: ledger_admin_pw
+      CORS_ORIGINS: http://localhost:5173
+      SEED_ENABLED: "true"
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ledger-frontend
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
+
+volumes:
+  ledger-pgdata:

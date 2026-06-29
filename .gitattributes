@@ -1,0 +1,15 @@
+# Normalize line endings.
+* text=auto eol=lf
+
+# Shell scripts and the Gradle wrapper must stay LF.
+*.sh text eol=lf
+gradlew text eol=lf
+
+# Windows scripts stay CRLF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary assets.
+*.png binary
+*.jpg binary
+*.jar binary
