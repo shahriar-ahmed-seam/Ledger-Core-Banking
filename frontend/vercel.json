@@ -5,7 +5,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://REPLACE-WITH-RENDER-HOST.onrender.com/api/:path*"
+      "destination": "https://ledger-core-banking-api.onrender.com/api/:path*"
     },
     { "source": "/:path*", "destination": "/index.html" }
   ]
