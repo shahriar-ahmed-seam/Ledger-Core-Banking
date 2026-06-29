@@ -88,7 +88,10 @@ export const transferApi = {
     const { data } = await api.post(
       '/transfers',
       { sourceId, destinationId, amount, currency },
-      { headers: { 'Idempotency-Key': newIdempotencyKey() } },
+      {
+        headers: { 'Idempotency-Key': newIdempotencyKey() },
+        timeout: 30_000, // Requirement 14.7: 30s client timeout for transfers
+      },
     );
     return unwrap<{ transactionId: string; replayed: boolean }>(data);
   },

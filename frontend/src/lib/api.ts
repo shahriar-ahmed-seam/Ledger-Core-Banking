@@ -8,7 +8,10 @@ import { tokenStore } from './tokenStore';
  */
 export const api = axios.create({
   baseURL: '/api/v1',
-  timeout: 30_000, // Requirement 14.7: 30s client timeout for transfers
+  // Generous default so a cold-started backend (free hosting can take ~60-90s to wake)
+  // doesn't fail the first request. The transfer call overrides this with a 30s timeout
+  // to honor the dashboard's transfer timeout requirement.
+  timeout: 90_000,
 });
 
 export interface ApiErrorBody {
